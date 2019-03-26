@@ -1,4 +1,4 @@
 
 
-def continuous_review(cfg):
+def continuous_review(cfg, logger):
     pass
