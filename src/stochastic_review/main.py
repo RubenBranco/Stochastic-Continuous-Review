@@ -35,6 +35,7 @@ def _get_logger(level):
 
     return logger
 
+
 def main():
     cl_args = _handle_command_line()
     args = get_args_from_cli(cli)
