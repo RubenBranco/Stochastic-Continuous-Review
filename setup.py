@@ -23,6 +23,7 @@ setup(
     package_dir={'': 'src'},
     packages=[
         'stochastic_review',
+        'stochastic_review.models',
     ],
     install_requires=[
         "bullet",
