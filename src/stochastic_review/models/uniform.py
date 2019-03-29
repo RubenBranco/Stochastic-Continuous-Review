@@ -12,7 +12,7 @@ def _r_func(q_star, w, cfg, delta):
     )
 
 
-def _phi_func(r_star, cfg):
+def _phi_func(r_star, cfg, q_star=None, w=None):
     return cfg['std_deviation'] / 2 - r_star + (r_star ** 2 / (2 * cfg['std_deviation']))
 
 

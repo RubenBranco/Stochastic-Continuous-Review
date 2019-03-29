@@ -1,20 +1,20 @@
 import math
 
 
-def k_func(q, r, mu, delta, phi_func, cfg):
+def k_func(q, r, mu, delta, phi_func, w, cfg):
     return (cfg['order_cost'] * delta) / q + cfg['unit_cost'] * delta + \
         cfg['storage_cost'] * (q / 2 + r - cfg['mean']) + \
-        ((cfg['out_of_stock'] * delta) / q) * phi_func(r, cfg)
+        ((cfg['out_of_stock'] * delta) / q) * phi_func(r, cfg, q, w)
 
 
 def q_func(q0, w, phi):
     return math.sqrt(q0 ** 2 + 2 * w * phi)
 
 
-def _stop_criteria(q_last, q_star, r_last, r_star, phi_func, mu, delta, cfg):
+def _stop_criteria(q_last, q_star, r_last, r_star, phi_func, mu, delta, w, cfg):
     return r_last is None or q_last is None or \
-        abs(k_func(q_star, r_star, mu, delta, phi_func, cfg) - \
-            k_func(q_last, r_star, mu, delta, phi_func, cfg)) \
+        abs(k_func(q_star, r_star, mu, delta, phi_func, w, cfg) - \
+            k_func(q_last, r_star, mu, delta, phi_func, w, cfg)) \
              > cfg['stop_crit']
 
 
@@ -35,9 +35,9 @@ def iterative_function_optimizer(r_func, phi_func, mu, delta, cfg, logger):
     logger.debug(f"Starting r*: {r_star}")
 
     i = 1
-    while _stop_criteria(q_last, q_star, r_last, r_star, phi_func, mu, delta, cfg):
+    while _stop_criteria(q_last, q_star, r_last, r_star, phi_func, mu, delta, w, cfg):
         logger.debug(f"Starting iteration number {i}")
-        phi = phi_func(r_star, cfg)
+        phi = phi_func(r_star, cfg, q_star, w)
         logger.debug(f"New phi value: {phi}")
 
         q_last = q_star
@@ -50,7 +50,7 @@ def iterative_function_optimizer(r_func, phi_func, mu, delta, cfg, logger):
 
         i += 1
 
-    k_star = k_func(q_star, r_star, mu, delta, phi_func, cfg)
+    k_star = k_func(q_star, r_star, mu, delta, phi_func, w, cfg)
     logger.debug(
         f"Ended the optimization after {i} iterations with values: Q={q_star}, r={r_star}, K={k_star}"
     )

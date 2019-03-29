@@ -3,6 +3,7 @@ from bullet import SlidePrompt, Bullet, Numbers
 
 DISTRIBUTIONS = [
     'Uniform',
+    'Normal',
 ]
 
 
