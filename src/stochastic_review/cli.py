@@ -8,7 +8,7 @@ DISTRIBUTIONS = [
 
 cli = SlidePrompt(
     [
-        Bullet(prompt="Choose the distribution", choices=DISTRIBUTIONS),
+        Bullet(prompt="Choose the distribution(Y)", choices=DISTRIBUTIONS),
         Numbers(prompt="Distribution mean(μ) / Starting point(a): ", type=float),
         Numbers(prompt="Distribution standard deviation(σ) / End point(b): ", type=float),
         Numbers(prompt="Delivery time(l): ", type=float),

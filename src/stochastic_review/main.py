@@ -40,8 +40,9 @@ def main():
     cl_args = _handle_command_line()
     args = get_args_from_cli(cli)
     logger = _get_logger(cl_args.verbosity)
-    k, q, r = continuous_review(args, logger)
+    k, q, r, qos = continuous_review(args, logger)
     logger.info(f"Value of K*: {k}")
     logger.info(f"Value of Q*: {q}")
     logger.info(f"Value of r*: {r}")
-    return k, q, r
+    logger.info(f"Value of Quality of Service: {qos}")
+    return k, q, r, qos

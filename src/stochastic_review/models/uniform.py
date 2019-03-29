@@ -1,6 +1,6 @@
 from scipy.stats import uniform
 
-from .common import iterative_function_optimizer
+from .common import iterative_function_optimizer, quality_of_service
 
 
 def _r_func(q_star, w, cfg, delta):
@@ -21,7 +21,7 @@ def uniform_continuous_review(cfg, logger):
     mu = cfg['order_cost'] * delta
     logger.info(f"Calculated delta: {delta}")
     logger.debug("Beginning iterative optimization")
-    return iterative_function_optimizer(
+    k_star, q_star, r_star, w = iterative_function_optimizer(
         _r_func,
         _phi_func,
         mu,
@@ -29,3 +29,5 @@ def uniform_continuous_review(cfg, logger):
         cfg,
         logger,
     )
+    qos = quality_of_service(q_star, r_star, w, delta)
+    return k_star, q_star, r_star, qos

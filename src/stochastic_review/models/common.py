@@ -18,6 +18,10 @@ def _stop_criteria(q_last, q_star, r_last, r_star, phi_func, mu, delta, cfg):
              > cfg['stop_crit']
 
 
+def quality_of_service(q_star, r_star, w, delta):
+    return (1 - q_star / w) ** (delta / q_star)
+
+
 def iterative_function_optimizer(r_func, phi_func, mu, delta, cfg, logger):
     w = (cfg['out_of_stock'] / cfg['storage_cost']) * delta
     q0 = math.sqrt((2 * cfg['order_cost'] * delta) / cfg['storage_cost'])
@@ -50,5 +54,5 @@ def iterative_function_optimizer(r_func, phi_func, mu, delta, cfg, logger):
     logger.debug(
         f"Ended the optimization after {i} iterations with values: Q={q_star}, r={r_star}, K={k_star}"
     )
-    return k_star, q_star, r_star
+    return k_star, q_star, r_star, w
 
