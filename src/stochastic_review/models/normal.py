@@ -16,7 +16,7 @@ def _phi_func(r_star, cfg, q_star, w):
 
 def normal_continuous_review(cfg, logger):
     delta = cfg['mean'] / cfg['delivery_time']
-    logger.info(f"Calculated delta: {delta}")
+    logger.info(f"Calculated delta: {round(delta, 2)}")
     logger.debug("Beginning iterative optimization")
     k_star, q_star, r_star, w = iterative_function_optimizer(
         _r_func,
